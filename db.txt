@@ -1,0 +1,50 @@
+create database dreamhouse;
+use dreamhouse;
+-- normal users table
+create table users(
+id int auto_increment primary key ,
+username varchar(60),
+email varchar(80),
+password varchar(200)
+
+);
+// staff registration
+create table staffregistration(
+staffno varchar(30) primary key,
+name varchar(50),
+sex varchar(1) check(sex in ('M','F')),
+dob date,
+branchno varchar(20),
+telephoneno varchar(30),
+position varchar(20) check(position in ('Manager','Supervisor','Assistant')),
+salary int,
+supervisorname varchar(30),
+foreign key(branchno) references branch(branchno)
+
+
+
+);
+// branch 
+create table branch(
+ branchno varchar(20) not null primary key,
+ street varchar(30),
+ city varchar(30),
+ postalcode varchar(30)
+);
+insert into Branch VALUES('B5', '22 Deer Rd', 'Sidcup', 'London', 'SW1 4EH', '0171-886-1212', '0171-886-1214');
+insert into Branch VALUES('B7', '16 Argyll St', 'Dyce', 'Aberdeen', 'AB2 3SU', '01224-67125', '01224-67111');
+insert into Branch VALUES('B3', '163 Main St' , 'Patrick', 'Glasgow', 'G11 9QX', '0141-339-2178', '0141-339-4439');
+insert into Branch VALUES('B4', '32 Manse Rd', 'Leigh', 'Bristol', 'BS99 1NZ', '0117-916-1170', '0117-776-1114');
+insert into Branch VALUES('B2', '56 Clover Dr', NULL, 'London', 'NW10 6EU', '0181-963-1030', '0181-453-7992');
+insert into staffregistration VALUES('SG37', 'Ann Beech','F','1960-11-03','B3', '0141-848-3345', 'Assistant', 12000, 'David Ford' );
+insert into staffregistration(staffno,name,sex,dob,branchno,telephoneno,position,salary) VALUES('SG14', 'David Ford','M','1958-03-24','B3', '0141-339-2177', 'Supervisor', 18000);
+insert into staffregistration(staffno,name,sex,dob,branchno,telephoneno,position,salary) VALUES('SA9', 'Mary Howe','F','1970-02-19','B7',NULL, 'Assistant', 9000);
+insert into staffregistration(staffno,name,sex,dob,branchno,telephoneno,position,salary) VALUES('SG5', 'Susan Brand','F','1940-06-03','B3' ,'0141-334-2001', 'Manager', 24000);
+insert into staffregistration(staffno,name,sex,dob,branchno,telephoneno,position,salary) VALUES('SB41', 'Julie Lee','F','1965-06-13','B2', '0181-554-3541', 'Assistant', 9000);
+create table managerinfo(
+staffno varchar(30) primary key,
+managerbonus int,
+startdate date,
+foreign key(staffno) references staffregistration(staffno)
+
+);
